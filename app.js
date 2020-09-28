@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
     const severMessage = req.request_time +
       ' | ' + req.method + ' from ' +
       req.originalUrl + ' | total time: ' + duration + 'ms'
-    console.log(severMessage)
+    console.log(`${severMessage}`)
   })
   return next()
 })

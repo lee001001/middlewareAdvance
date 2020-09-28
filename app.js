@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 })
 */
 
-app.get('/', (req, res, next) => {
+app.use(function (req, res, next) {
   const startTime = Date.now()
   req.request_time = moment(startTime).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 
@@ -54,49 +54,20 @@ app.get('/', (req, res, next) => {
   return next()
 })
 
-app.get('/new', (req, res, next) => {
-  const startTime = Date.now()
-  req.request_time = moment(startTime).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-
-  res.on('finish', () => {
-    const finishTime = Date.now()
-    const duration = finishTime - startTime
-    const severMessage = req.request_time +
-      ' | ' + req.method + ' from ' +
-      req.originalUrl + ' | total time: ' + duration + 'ms'
-    console.log(severMessage)
-  })
-  return next()
+app.get('/', (req, res) => {
+  res.send('列出全部 Todo')
 })
 
-app.get('/:id', (req, res, next) => {
-  const startTime = Date.now()
-  req.request_time = moment(startTime).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-
-  res.on('finish', () => {
-    const finishTime = Date.now()
-    const duration = finishTime - startTime
-    const severMessage = req.request_time +
-      ' | ' + req.method + ' from ' +
-      req.originalUrl + ' | total time: ' + duration + 'ms'
-    console.log(severMessage)
-  })
-  return next()
+app.get('/new', (req, res) => {
+  res.send('新增 Todo 頁面')
 })
 
-app.post('/', (req, res, next) => {
-  const startTime = Date.now()
-  req.request_time = moment(startTime).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+app.get('/:id', (req, res) => {
+  res.send('顯示一筆 Todo')
+})
 
-  res.on('finish', () => {
-    const finishTime = Date.now()
-    const duration = finishTime - startTime
-    const severMessage = req.request_time +
-      ' | ' + req.method + ' from ' +
-      req.originalUrl + ' | total time: ' + duration + 'ms'
-    console.log(severMessage)
-  })
-  return next()
+app.post('/', (req, res) => {
+  res.send('新增一筆  Todo')
 })
 
 // 設定 port 3000
